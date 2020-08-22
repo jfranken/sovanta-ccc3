@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import sovanta.ccc3.util.EmojiUtil;
+import sovanta.ccc3.util.impl.CharacterSurrogateEmojiUtil;
 import sovanta.ccc3.util.impl.RegExEmojiUtil;
 import sovanta.ccc3.util.impl.StringBuilderEmojiUtil;
 
@@ -15,8 +16,9 @@ public class EmojiTest {
         var utils = new ArrayList<EmojiUtil>();
         utils.add(new RegExEmojiUtil());
         utils.add(new StringBuilderEmojiUtil());
+        utils.add(new CharacterSurrogateEmojiUtil());
 
-        for (var util: utils) {
+        for (var util : utils) {
             System.out.println("-----------------------------------------------------");
             System.out.println("Using util " + util.getClass().getSimpleName());
             System.out.println("👩 + 💻 = " + util.addJoiner("👩💻"));

@@ -1,39 +1,34 @@
 package sovanta.ccc3;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import sovanta.ccc3.util.EmojiUtil;
+import sovanta.ccc3.util.impl.CharacterSurrogateEmojiUtil;
+import sovanta.ccc3.util.impl.RegExEmojiUtil;
+import sovanta.ccc3.util.impl.StringBuilderEmojiUtil;
+
+
 public class Main {
 
     public static void main(String[] args) {
+        List<EmojiUtil> utils = new ArrayList<>();
+        utils.add(new RegExEmojiUtil());
+        utils.add(new StringBuilderEmojiUtil());
+        utils.add(new CharacterSurrogateEmojiUtil());
+
         String macBookWoman = "👩‍💻";
         String woman = "👩";
         String macBook = "💻";
 
-        System.out.print("Remove Joiner from " + macBookWoman + ": ");
-        System.out.println(removeJoiner(macBookWoman));
-        System.out.print("Add Joiner to " + woman + macBook + ": ");
-        System.out.println(addJoiner(woman + macBook));
+        for (EmojiUtil util : utils) {
+            System.out.println("Testing Util: " + util.getClass().getSimpleName());
+            System.out.print("Remove Joiner from " + macBookWoman + ": ");
+            System.out.println(util.removeJoiner(macBookWoman));
+            System.out.print("Add Joiner to " + woman + macBook + ": ");
+            System.out.println(util.addJoiner(woman + macBook));
+            System.out.println();
+        }
     }
 
-    private static String removeJoiner(String input) {
-        String partOne = input.substring(0, 2);
-        String partTwo = input.substring(4);
-        int partOneCodePoint = partOne.codePointAt(partOne.offsetByCodePoints(0, 0));
-        int partTwoCodePoint = partTwo.codePointAt(partTwo.offsetByCodePoints(0, 0));
-        partOne = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partOneCodePoint)});
-        partTwo = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partTwoCodePoint)});
-        return partOne + partTwo;
-    }
-
-    private static String addJoiner(String input) {
-        String partOne = input.substring(0, 2);
-        String partTwo = input.substring(2);
-        int partOneCodePoint = partOne.codePointAt(partOne.offsetByCodePoints(0, 0));
-        int partTwoCodePoint = partTwo.codePointAt(partTwo.offsetByCodePoints(0, 0));
-        partOne = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partOneCodePoint)});
-        partTwo = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partTwoCodePoint)});
-        return partOne + "\u200D" + partTwo;
-    }
 }
