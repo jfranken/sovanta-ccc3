@@ -1,6 +1,6 @@
 package sovanta.ccc3.util.impl;
 
-import java.util.Objects;
+import java.util.stream.Collectors;
 
 import sovanta.ccc3.util.EmojiUtil;
 
@@ -12,33 +12,14 @@ import sovanta.ccc3.util.EmojiUtil;
 public class CharacterSurrogateEmojiUtil implements EmojiUtil {
 
     @Override
-    public String addJoiner(String input) {
-        Objects.requireNonNull(input);
-
-        String partOne = input.substring(0, 2);
-        String partTwo = input.substring(2);
-        int partOneCodePoint = partOne.codePointAt(partOne.offsetByCodePoints(0, 0));
-        int partTwoCodePoint = partTwo.codePointAt(partTwo.offsetByCodePoints(0, 0));
-        partOne = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partOneCodePoint)});
-        partTwo = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partTwoCodePoint)});
-        return partOne + "\u200D" + partTwo;
+    public String removeJoiner(String input) {
+        return String.join("", input.split(ZWJ));
     }
 
     @Override
-    public String removeJoiner(String input) {
-        Objects.requireNonNull(input);
-
-        String partOne = input.substring(0, 2);
-        String partTwo = input.substring(4);
-        int partOneCodePoint = partOne.codePointAt(partOne.offsetByCodePoints(0, 0));
-        int partTwoCodePoint = partTwo.codePointAt(partTwo.offsetByCodePoints(0, 0));
-        partOne = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partOneCodePoint)});
-        partTwo = String.valueOf(
-                new char[] {Character.highSurrogate(partOneCodePoint), Character.lowSurrogate(partTwoCodePoint)});
-        return partOne + partTwo;
+    public String addJoiner(String input) {
+        return input.codePoints().boxed()
+                .map(c -> String.valueOf(new char[] {Character.highSurrogate(c), Character.lowSurrogate(c)}))
+                .collect(Collectors.joining(ZWJ));
     }
-
 }

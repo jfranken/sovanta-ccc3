@@ -19,14 +19,21 @@ public class Main {
 
         String macBookWoman = "👩‍💻";
         String woman = "👩";
+        String man = "👨";
+        String girl = "👧";
         String macBook = "💻";
+        String family = "👨‍👩‍👧";
 
         for (EmojiUtil util : utils) {
             System.out.println("Testing Util: " + util.getClass().getSimpleName());
             System.out.print("Remove Joiner from " + macBookWoman + ": ");
             System.out.println(util.removeJoiner(macBookWoman));
+            System.out.print("Remove Joiner from " + family + ": ");
+            System.out.println(util.removeJoiner(family));
             System.out.print("Add Joiner to " + woman + macBook + ": ");
             System.out.println(util.addJoiner(woman + macBook));
+            System.out.print("Add Joiner to " + man + woman + girl + ": ");
+            System.out.println(util.addJoiner(man + woman + girl));
             System.out.println();
         }
     }
