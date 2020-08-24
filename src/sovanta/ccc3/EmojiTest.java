@@ -23,6 +23,8 @@ public class EmojiTest {
             System.out.println("Using util " + util.getClass().getSimpleName());
             System.out.println("👩 + 💻 = " + util.addJoiner("👩💻"));
             System.out.println("👩‍💻 is a combination of: " + util.removeJoiner("👩‍💻"));
+            System.out.println("‍👨 + 👧 = " + util.addJoiner("‍👨👧"));
+            System.out.println("‍👨‍👩‍👧‍👦 is a combination of: " + util.removeJoiner("‍👨‍👩‍👧‍👦"));
             System.out.println("-----------------------------------------------------");
             System.out.println();
         }
