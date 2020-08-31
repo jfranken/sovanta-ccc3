@@ -13,7 +13,7 @@ public class CharacterSurrogateEmojiUtil implements EmojiUtil {
 
     @Override
     public String removeJoiner(String input) {
-        return String.join("", input.split(ZWJ));
+        return input.replace(ZWJ, "");
     }
 
     @Override
